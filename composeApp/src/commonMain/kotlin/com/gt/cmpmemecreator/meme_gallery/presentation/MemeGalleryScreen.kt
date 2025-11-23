@@ -1,4 +1,4 @@
-package com.gt.cmpmemecreator.core.meme_gallery.presentation
+package com.gt.cmpmemecreator.meme_gallery.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

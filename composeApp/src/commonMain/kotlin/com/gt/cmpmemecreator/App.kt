@@ -1,7 +1,7 @@
 package com.gt.cmpmemecreator
 
 import androidx.compose.runtime.Composable
-import com.gt.cmpmemecreator.core.meme_gallery.presentation.MemeGalleryScreen
+import com.gt.cmpmemecreator.meme_gallery.presentation.MemeGalleryScreen
 import com.gt.cmpmemecreator.core.theme.MemeCreatorTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
