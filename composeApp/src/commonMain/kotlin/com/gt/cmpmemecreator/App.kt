@@ -1,6 +1,7 @@
 package com.gt.cmpmemecreator
 
 import androidx.compose.runtime.Composable
+import com.gt.cmpmemecreator.core.presentation.NavigationRoot
 import com.gt.cmpmemecreator.meme_gallery.presentation.MemeGalleryScreen
 import com.gt.cmpmemecreator.core.theme.MemeCreatorTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -9,11 +10,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     MemeCreatorTheme {
-
-        MemeGalleryScreen(
-            onMemeTemplateSelected = {
-
-            }
-        )
+        NavigationRoot()
     }
 }
