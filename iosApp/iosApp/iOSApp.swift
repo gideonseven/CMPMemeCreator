@@ -7,9 +7,10 @@ struct iOSApp: App {
     init() {
         InitKoinKt.doInitKoin()
 
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
+        var body: some Scene {
+            WindowGroup {
+                ContentView()
+            }
         }
     }
 }
