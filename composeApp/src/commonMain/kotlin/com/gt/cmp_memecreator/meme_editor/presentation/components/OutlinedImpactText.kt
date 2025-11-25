@@ -1,4 +1,4 @@
-package com.gt.cmp_memecreator.meme_editor.presentation.component
+package com.gt.cmp_memecreator.meme_editor.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text

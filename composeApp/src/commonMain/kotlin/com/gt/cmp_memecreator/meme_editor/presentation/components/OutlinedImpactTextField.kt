@@ -1,5 +1,6 @@
-package com.gt.cmp_memecreator.meme_editor.presentation.component
+package com.gt.cmp_memecreator.meme_editor.presentation.components
 
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import com.gt.cmp_memecreator.meme_editor.presentation.util.rememberFillTextStyle
 import com.gt.cmp_memecreator.meme_editor.presentation.util.rememberStrokeTextStyle
 
@@ -36,6 +38,13 @@ fun OutlinedImpactTextField(
         )
     }
 
+    val texBoundingSize = with(LocalDensity.current) {
+        DpSize(
+            width = textLayoutResult.size.width.toDp(),
+            height = textLayoutResult.size.height.toDp()
+        )
+    }
+
     BasicTextField(
         value = text,
         onValueChange = {
@@ -51,7 +60,9 @@ fun OutlinedImpactTextField(
             )
 
             innerTextField()
-        }
+        },
+        modifier = modifier
+            .size(texBoundingSize)
     )
 }
 
