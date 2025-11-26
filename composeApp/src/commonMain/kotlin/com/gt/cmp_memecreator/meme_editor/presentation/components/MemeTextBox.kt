@@ -15,20 +15,24 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.gt.cmp_memecreator.meme_editor.presentation.MemeText
 import com.gt.cmp_memecreator.meme_editor.presentation.TextBoxInteractionState
 import com.gt.cmp_memecreator.meme_editor.presentation.util.rememberFillTextStyle
 import com.gt.cmp_memecreator.meme_editor.presentation.util.rememberStrokeTextStyle
+import kotlinx.coroutines.delay
 
 @Composable
 fun MemeTextBox(
@@ -45,6 +49,24 @@ fun MemeTextBox(
 
     val memeTextFocusRequester = remember { FocusRequester() }
     val focusManger = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    //textbox interaction state
+    LaunchedEffect(textBoxInteractionState){
+        if(textBoxInteractionState is TextBoxInteractionState.Editing){
+            memeTextFocusRequester.requestFocus()
+            delay(100)
+            keyboardController?.show()
+        }
+    }
+
+    //meme text interaction
+    LaunchedEffect(textBoxInteractionState, memeText.id){
+        if(textBoxInteractionState !is TextBoxInteractionState.Selected){
+            focusManger.clearFocus()
+        }
+    }
+
     Box(modifier) {
         Box(
             modifier = Modifier
@@ -79,6 +101,7 @@ fun MemeTextBox(
                     maxWidth = maxWidth - (textPadding * 2),
                     maxHeight = maxHeigh - (textPadding * 2),
                     modifier = Modifier
+                        .focusRequester(memeTextFocusRequester)
                         .padding(textPadding)
                 )
             } else {
