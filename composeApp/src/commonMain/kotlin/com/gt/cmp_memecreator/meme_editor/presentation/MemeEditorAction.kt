@@ -17,7 +17,7 @@ sealed interface MemeEditorAction {
     data class OnDeleteMemeTextClick(val id: String) : MemeEditorAction
     data class OnMemeTextTransformChange(
         val id: String,
-        val offest: Offset,
+        val offset: Offset,
         val rotation: Float,
         val scale: Float
     ) : MemeEditorAction
