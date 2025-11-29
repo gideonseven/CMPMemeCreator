@@ -1,5 +1,6 @@
 package com.gt.cmp_memecreator.meme_editor.presentation
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.IntSize
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 class MemeEditorViewModel() : ViewModel() {
 
@@ -29,7 +32,7 @@ class MemeEditorViewModel() : ViewModel() {
 
     fun onAction(action: MemeEditorAction) {
         when (action) {
-            MemeEditorAction.OnAddTextClick -> TODO()
+            MemeEditorAction.OnAddTextClick -> addText()
             MemeEditorAction.OnConfirmLeaveWithoutSaving -> TODO()
             is MemeEditorAction.OnContainerSizeChange -> updateContainerSize(action.size)
             is MemeEditorAction.OnDeleteMemeTextClick -> deleteMemeText(action.id)
@@ -41,6 +44,21 @@ class MemeEditorViewModel() : ViewModel() {
             is MemeEditorAction.OnSaveMemeClick -> TODO()
             is MemeEditorAction.OnSelectMemeText -> selectMemeText(action.id)
             MemeEditorAction.OnTapOutsideSelectedText -> TODO()
+        }
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    private fun addText() {
+        val id = Uuid.random().toString()
+        val templateSize = state.value.templateSize
+
+        val position = if (templateSize != IntSize.Zero) {
+            Offset(
+                x = templateSize.width * 0.25f,
+                y = templateSize.height * 0.25f
+            )
+        } else {
+            Offset(100f, 100f)
         }
     }
 
