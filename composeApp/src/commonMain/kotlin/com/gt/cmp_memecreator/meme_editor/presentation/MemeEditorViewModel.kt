@@ -40,10 +40,47 @@ class MemeEditorViewModel() : ViewModel() {
             is MemeEditorAction.OnEditMemeText -> editMemeText(action.id)
             MemeEditorAction.OnGoBackClick -> TODO()
             is MemeEditorAction.OnMemeTextChange -> updateMemeText(action.id, action.text)
-            is MemeEditorAction.OnMemeTextTransformChange -> TODO()
+            is MemeEditorAction.OnMemeTextTransformChange -> transformMemeText(
+                id = action.id,
+                offset = action.offset,
+                rotation = action.rotation,
+                scale = action.scale
+            )
+
             is MemeEditorAction.OnSaveMemeClick -> TODO()
             is MemeEditorAction.OnSelectMemeText -> selectMemeText(action.id)
-            MemeEditorAction.OnTapOutsideSelectedText -> TODO()
+            MemeEditorAction.OnTapOutsideSelectedText -> unselectMemeText()
+        }
+    }
+
+    private fun transformMemeText(
+        id: String,
+        offset: Offset,
+        rotation: Float,
+        scale: Float
+    ) {
+        _state.update {
+            val (width, height) = it.templateSize
+            it.copy(
+                memeTexts = it.memeTexts.map { memeText ->
+                    if (memeText.id == id) {
+                        memeText.copy(
+                            offsetRatioX = offset.x / width,
+                            offsetRatioY = offset.y / height,
+                            rotation = rotation,
+                            scale = scale
+                        )
+                    } else memeText
+                }
+            )
+        }
+    }
+
+    private fun unselectMemeText() {
+        _state.update {
+            it.copy(
+                textBoxInteractionState = TextBoxInteractionState.None
+            )
         }
     }
 
@@ -52,13 +89,18 @@ class MemeEditorViewModel() : ViewModel() {
         val id = Uuid.random().toString()
         val templateSize = state.value.templateSize
 
-        val position = if (templateSize != IntSize.Zero) {
-            Offset(
-                x = templateSize.width * 0.25f,
-                y = templateSize.height * 0.25f
+        val memeText = MemeText(
+            id = id,
+            text = "TAP TO EDIT",
+            offsetRatioX = 0.25f,
+            offsetRatioY = 0.25f
+        )
+
+        _state.update {
+            it.copy(
+                memeTexts = it.memeTexts + memeText,
+                textBoxInteractionState = TextBoxInteractionState.Selected(id)
             )
-        } else {
-            Offset(100f, 100f)
         }
     }
 

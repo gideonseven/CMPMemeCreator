@@ -90,7 +90,7 @@ fun MemeEditorScreen(
                 DraggableContainer(
                     children = state.memeTexts,
                     textBoxInteractionState = state.textBoxInteractionState,
-                    onChildTransformChange = { id, offset, rotation, scale ->
+                    onChildTransformChanged = { id, offset, rotation, scale ->
                         onAction(
                             MemeEditorAction.OnMemeTextTransformChange(
                                 id = id,
